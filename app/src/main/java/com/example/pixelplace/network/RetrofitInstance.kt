@@ -1,4 +1,4 @@
-package com.example.projetotestes.network
+package com.example.pixelplace.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

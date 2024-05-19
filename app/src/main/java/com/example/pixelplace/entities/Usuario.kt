@@ -1,4 +1,4 @@
-package com.example.projetotestes.entities
+package com.example.pixelplace.entities
 
 data class Usuario(
     val idUsuario: String?,

@@ -1,4 +1,4 @@
-package com.example.projetotestes.telas
+package com.example.pixelplace.telas
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -45,8 +45,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.projetotestes.R
-import com.example.projetotestes.ui.theme.poppinsFontFamily
+import com.example.pixelplace.R
+import com.example.pixelplace.ui.theme.poppinsFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

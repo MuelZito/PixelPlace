@@ -1,4 +1,4 @@
-package com.example.projetotestes
+package com.example.pixelplace
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,15 +8,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.projetotestes.telas.TelaCadastro
-import com.example.projetotestes.telas.TelaLogin
-import com.example.projetotestes.ui.theme.ProjetoTestesTheme
+import com.example.pixelplace.telas.TelaCadastro
+import com.example.pixelplace.telas.TelaLogin
+import com.example.pixelplace.ui.theme.PixelPlaceTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ProjetoTestesTheme {
+            PixelPlaceTheme {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = "login") {
                     composable("login") { TelaLogin(navController) }
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun DefaultPreview() {
-    ProjetoTestesTheme {
+    PixelPlaceTheme {
     }
 }
 

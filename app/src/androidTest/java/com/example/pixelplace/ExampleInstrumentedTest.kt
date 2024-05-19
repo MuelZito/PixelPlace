@@ -1,4 +1,4 @@
-package com.example.projetotestes
+package com.example.pixelplace
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

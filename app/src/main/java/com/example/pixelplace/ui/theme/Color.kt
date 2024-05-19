@@ -1,4 +1,4 @@
-package com.example.projetotestes.ui.theme
+package com.example.pixelplace.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

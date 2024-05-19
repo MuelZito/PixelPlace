@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.projetotestes"
+    namespace = "com.example.pixelplace"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.projetotestes"
+        applicationId = "com.example.pixelplace"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

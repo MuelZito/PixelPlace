@@ -1,4 +1,4 @@
-package com.example.projetotestes
+package com.example.pixelplace
 
 import org.junit.Test
 
