@@ -1,5 +1,7 @@
 package com.example.pixelplace.telas
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,26 +35,37 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.pixelplace.R
+import com.example.pixelplace.entities.Usuario
+import com.example.pixelplace.network.ApiClient
+import com.example.pixelplace.network.ApiService
 import com.example.pixelplace.ui.theme.poppinsFontFamily
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelaCadastro(navController: NavController) {
+fun TelaCadastro(navController: NavController,apiService: ApiService) {
     var nomeUsuario by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-    var senha by remember { mutableStateOf("") }
-    var confirmarSenha by remember { mutableStateOf("") }
+    var senha1 by remember { mutableStateOf("") }
+    var senha2 by remember { mutableStateOf("") }
     var senhaVisivel by remember { mutableStateOf(false) }
+    val contexto = LocalContext.current
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -159,8 +172,8 @@ fun TelaCadastro(navController: NavController) {
                     color = Color.White
                 )
                 OutlinedTextField(
-                    value = senha,
-                    onValueChange = { senha = it },
+                    value = senha1,
+                    onValueChange = { senha1 = it },
                     visualTransformation = if (senhaVisivel) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
                         IconButton(onClick = { senhaVisivel = !senhaVisivel }) {
@@ -190,8 +203,8 @@ fun TelaCadastro(navController: NavController) {
                     color = Color.White
                 )
                 OutlinedTextField(
-                    value = confirmarSenha,
-                    onValueChange = { confirmarSenha = it },
+                    value = senha2,
+                    onValueChange = { senha2 = it },
                     visualTransformation = if (senhaVisivel) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
                         IconButton(onClick = { senhaVisivel = !senhaVisivel }) {
@@ -216,7 +229,24 @@ fun TelaCadastro(navController: NavController) {
                 Button(
                     modifier = Modifier
                         .size(width = 240.dp, height = ButtonDefaults.MinHeight),
-                    onClick = {/*Açao para ir para tela de login e cadastrar*/ },
+                    onClick = {
+                        val usuario = Usuario(null,nomeUsuario,email,senha1,null,null )
+                        apiService.inserirUsuario(usuario).enqueue(object : Callback<Void> {
+                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                                if (response.isSuccessful) {
+                                    navController.navigate("login")
+                                } else {
+                                    Toast.makeText(contexto,"Não foi possivel cadastrar",Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                            override fun onFailure(call: Call<Void>, t: Throwable) {
+                                Toast.makeText(contexto,"Erro na conexão",Toast.LENGTH_SHORT).show()
+                                Log.d("Conexao",t.toString())
+
+                            }
+                        })
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2596BE)),
                     shape = RoundedCornerShape(4.dp)
                 ) {
@@ -253,9 +283,10 @@ fun TelaCadastro(navController: NavController) {
 }
 
 
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//fun TelaCadastroPreview() {
-//    val navController = rememberNavController()
-//    TelaCadastro(navController = navController)
-//}
+@Preview(showBackground = true)
+@Composable
+fun TelaCadastroPreview() {
+    val navController = rememberNavController()
+    TelaCadastro(navController = navController, apiService = ApiClient.apiService)
+}
+

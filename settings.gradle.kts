@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ProjetoTestes"
+rootProject.name = "PixelPlace"
 include(":app")

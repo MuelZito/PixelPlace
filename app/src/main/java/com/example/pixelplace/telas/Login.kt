@@ -45,8 +45,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.pixelplace.R
 import com.example.pixelplace.ui.theme.poppinsFontFamily
+import com.example.pixelplace.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -83,7 +84,9 @@ fun CardJogo(titulo: String, desenvolvedora: String, categoria: String, preco: S
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 20.dp)
+                        .shadow(elevation = 10.dp, RoundedCornerShape(12.dp),ambientColor = Color(0xFF2596BE), spotColor = Color(0xFF2596BE), clip = false)
                         .size(width = 150.dp, height = 35.dp),
+                    //elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2596BE)),
                     shape = RoundedCornerShape(12.dp)
 
@@ -91,7 +94,8 @@ fun CardJogo(titulo: String, desenvolvedora: String, categoria: String, preco: S
                     Text(
                         text = preco,
                         fontSize = 12.sp,
-                        textAlign = TextAlign.Center
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
             }
@@ -100,7 +104,7 @@ fun CardJogo(titulo: String, desenvolvedora: String, categoria: String, preco: S
     }
 }
 
-@Preview()
+@Preview(showBackground = true)
 @Composable
 fun CardJogoPreview() {
     Column(

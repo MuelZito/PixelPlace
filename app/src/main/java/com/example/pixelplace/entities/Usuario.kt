@@ -6,5 +6,5 @@ data class Usuario(
     val email: String,
     val senha: String,
     var imagem: ByteArray?,
-    val isAdm: String
+    val isAdm: String?
 )
