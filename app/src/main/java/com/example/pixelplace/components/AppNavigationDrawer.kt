@@ -35,7 +35,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.pixelplace.R
 import com.example.pixelplace.telas.AppDestinos
+import com.example.pixelplace.telas.TelaBiblioteca
 import com.example.pixelplace.telas.TelaCadastro
+import com.example.pixelplace.telas.TelaInicial
 import com.example.pixelplace.telas.TelaLogin
 import com.example.pixelplace.ui.theme.TopBarColor
 import com.example.pixelplace.ui.theme.poppinsFontFamily
@@ -95,6 +97,8 @@ fun AppNavigationDrawer() {
                             drawerState.apply {
                                 if (isClosed) open() else close()
                             }
+                            navController.navigate(AppDestinos.Inicial.rota)
+
                         }
 
                     },
@@ -126,6 +130,7 @@ fun AppNavigationDrawer() {
                             drawerState.apply {
                                 if (isClosed) open() else close()
                             }
+                            navController.navigate(AppDestinos.Biblioteca.rota)
                         }
                     },
                     icon = {
@@ -295,8 +300,10 @@ fun AppNavigationDrawer() {
                     })
             }
         ) {
-            NavHost(navController = navController, startDestination = AppDestinos.Login.rota) {
+            NavHost(navController = navController, startDestination = AppDestinos.Inicial.rota) {
                 composable(AppDestinos.Login.rota) { TelaLogin(navController) }
+                composable(AppDestinos.Inicial.rota) { TelaInicial() }
+                composable(AppDestinos.Biblioteca.rota) { TelaBiblioteca(navController) }
                 composable(AppDestinos.Cadastro.rota) { TelaCadastro(navController) }
             }
         }
