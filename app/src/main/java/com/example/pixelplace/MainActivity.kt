@@ -5,13 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.example.pixelplace.network.ApiClient
-import com.example.pixelplace.network.ApiService
-import com.example.pixelplace.telas.TelaCadastro
-import com.example.pixelplace.telas.TelaLogin
+import com.example.pixelplace.components.AppNavigationDrawer
 import com.example.pixelplace.ui.theme.PixelPlaceTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,13 +13,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PixelPlaceTheme {
-                val navController = rememberNavController()
-                val apiService = ApiClient.apiService
-
-                NavHost(navController = navController, startDestination = "login") {
-                    composable("login") { TelaLogin(navController) }
-                    composable("cadastro") { TelaCadastro(navController,apiService) }
-                }
+               AppNavigationDrawer()
             }
         }
     }

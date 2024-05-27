@@ -113,6 +113,11 @@ fun CardJogoPreview() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        CardJogo(titulo = "Minecraft", desenvolvedora = "Mojang", "Sobrevivência", preco = "R$75.89")
+        CardJogo(
+            "Minecraft",
+            "Mojang",
+            "Sobrevivência",
+            "R$75.89"
+        )
     }
 }

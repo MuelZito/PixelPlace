@@ -1,7 +1,6 @@
 package com.example.pixelplace.telas
 
 import android.annotation.SuppressLint
-
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -23,14 +22,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import com.example.pixelplace.ui.theme.poppinsFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Preview
 @Composable
-fun TelaBiblioteca() {
+fun TelaBiblioteca(navController: NavHostController) {
     var query by remember { mutableStateOf("") }
     var isExpanded by remember { mutableStateOf(false) }
     var gender by remember { mutableStateOf("Nome") }

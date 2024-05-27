@@ -11,23 +11,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,19 +31,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.pixelplace.ui.theme.poppinsFontFamily
-import com.example.pixelplace.R
+import androidx.navigation.compose.rememberNavController
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TelaLogin(navController: NavController) {
     var email by remember { mutableStateOf("") }
@@ -57,34 +50,6 @@ fun TelaLogin(navController: NavController) {
     var senhaVisivel by remember { mutableStateOf(false) }
 
 
-
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = "PixelPlace",
-                        fontFamily = poppinsFontFamily, fontWeight = FontWeight.Normal
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorResource(id = R.color.topBarCor),
-                    titleContentColor = Color.White,
-
-                    ),
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            tint = Color.White,
-                            contentDescription = null
-                        )
-                    }
-                },
-
-                )
-        },
-    ) { paddingValues ->
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = Color(0XFF3E3E3E)
@@ -92,17 +57,10 @@ fun TelaLogin(navController: NavController) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = paddingValues.calculateTopPadding()),
+                    .padding(top = 30.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(
-                    text = "Iniciar Sessão",
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 24.sp,
-                    color = Color.White,
-
-                    )
 
                 Spacer(
                     modifier = Modifier
@@ -112,7 +70,7 @@ fun TelaLogin(navController: NavController) {
                 Text(
                     modifier = Modifier
                         .align(Alignment.Start)
-                        .padding(start = 50.dp, bottom = 10.dp),
+                        .padding(start = 55.dp, bottom = 10.dp),
                     text = "INICIAR SESSÃO COM O EMAIL",
                     color = Color(0XFF1992FE),
                     textDecoration = TextDecoration.Underline
@@ -136,7 +94,7 @@ fun TelaLogin(navController: NavController) {
                 Text(
                     modifier = Modifier
                         .align(Alignment.Start)
-                        .padding(start = 50.dp, bottom = 10.dp),
+                        .padding(start = 55.dp, bottom = 10.dp),
                     text = "SENHA",
                     color = Color.White
                 )
@@ -163,7 +121,7 @@ fun TelaLogin(navController: NavController) {
                 Row(
                     modifier = Modifier
                         .align(Alignment.Start)
-                        .padding(start = 35.dp),
+                        .padding(start = 43.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Checkbox(
@@ -219,7 +177,7 @@ fun TelaLogin(navController: NavController) {
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(70.dp)
+                        .padding(50.dp)
                 )
 
                 Text(
@@ -229,19 +187,22 @@ fun TelaLogin(navController: NavController) {
                 )
                 Text(
                     modifier = Modifier
-                        .clickable { navController.navigate("cadastro") }
+                        .clickable {
+                            navController.navigate(AppDestinos.Cadastro.rota)
+                        }
                         .padding(top = 5.dp),
                     text = "Cadastrar-se",
                     color = Color(0xFF1992FE),
                     textDecoration = TextDecoration.Underline
+
                 )
             }
         }
     }
-}
 
-//@Preview
-//@Composable
-//fun TelaLoginPreview() {
-//    TelaLogin()
-//}
+
+@Preview
+@Composable
+fun TelaLoginPreview() {
+    TelaLogin(navController = rememberNavController())
+}
