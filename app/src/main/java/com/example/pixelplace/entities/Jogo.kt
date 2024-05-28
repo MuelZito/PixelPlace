@@ -1,17 +1,15 @@
 package com.example.pixelplace.entities
 
-import java.time.LocalDate
-
 
 data class Jogo(
     val idJogo: Int?,
     val nome: String,
-    var imagem: ByteArray,
+    var imagem: String,
     val descricao: String,
     val categoria: String,
     val preco: Double,
     val desconto: Double,
-    val data_lancamento: LocalDate,
+    val data_lancamento: String,
     val numero_avaliacao: Int,
     val numero_estrelas: Int,
     val desenvolvedora: String
