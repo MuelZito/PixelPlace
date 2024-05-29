@@ -24,6 +24,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     PixelPlaceTheme {
+
     }
 }
 

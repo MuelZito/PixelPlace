@@ -43,7 +43,6 @@ import com.example.pixelplace.ui.theme.TopBarColor
 import com.example.pixelplace.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavigationDrawer() {
@@ -299,8 +298,8 @@ fun AppNavigationDrawer() {
                         }
                     })
             }
-        ) {
-            NavHost(navController = navController, startDestination = AppDestinos.Inicial.rota) {
+        ) {paddingValues ->
+            NavHost(navController = navController, startDestination = AppDestinos.Login.rota, modifier = Modifier.padding(paddingValues)) {
                 composable(AppDestinos.Login.rota) { TelaLogin(navController) }
                 composable(AppDestinos.Inicial.rota) { TelaInicial() }
                 composable(AppDestinos.Biblioteca.rota) { TelaBiblioteca(navController) }

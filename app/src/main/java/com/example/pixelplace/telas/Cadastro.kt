@@ -49,7 +49,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TelaCadastro(navController: NavController) {
     var nomeUsuario by remember { mutableStateOf("") }
@@ -66,8 +65,7 @@ fun TelaCadastro(navController: NavController) {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 0.dp),
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

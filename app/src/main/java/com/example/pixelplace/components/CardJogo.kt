@@ -79,34 +79,34 @@ fun CardJogo(jogo: Jogo) {
                     fontSize = 12.sp
                 )
 
-                Row(
-                    modifier = Modifier
-                        .padding(top = 0.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    jogo.categoria.split(",").forEach { categoria ->
-                        Box(
-                            modifier = Modifier
-                                .padding(top = 6.dp)
-                                .background(
-                                    Color.White.copy(alpha = 0.3f),
-                                    RoundedCornerShape(3.dp)
-                                )
-                                .padding(
-                                    horizontal = 4.dp,
-                                    vertical = 2.dp
-                                )
-                        ) {
-                            Text(
-                                text = categoria.trim(),
-                                color = Color(0xFFFEFEFE),
-                                fontFamily = poppinsFontFamily,
-                                fontWeight = FontWeight.Medium,
-                                fontSize = 12.sp
-                            )
-                        }
-                    }
-                }
+//                Row(
+//                    modifier = Modifier
+//                        .padding(top = 0.dp),
+//                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+//                ) {
+//                    jogo.categoria.split(",").forEach { categoria ->
+//                        Box(
+//                            modifier = Modifier
+//                                .padding(top = 6.dp)
+//                                .background(
+//                                    Color.White.copy(alpha = 0.3f),
+//                                    RoundedCornerShape(3.dp)
+//                                )
+//                                .padding(
+//                                    horizontal = 4.dp,
+//                                    vertical = 2.dp
+//                                )
+//                        ) {
+//                            Text(
+//                                text = categoria.trim(),
+//                                color = Color(0xFFFEFEFE),
+//                                fontFamily = poppinsFontFamily,
+//                                fontWeight = FontWeight.Medium,
+//                                fontSize = 12.sp
+//                            )
+//                        }
+//                    }
+//                }
 
                 Button(
                     onClick = {},
