@@ -20,6 +20,6 @@ interface ApiService {
     fun getJogoId(@Path("id")id: Int): Call<Jogo>
 
     @GET("api/ServicesUsuario/Login")
-    fun login(@Body usuario: Usuario): Call<Usuario>
+    fun login(@Query("email") email: String, @Query("senha") senha: String): Call<Usuario>
 
 }
