@@ -1,7 +1,5 @@
 package com.example.pixelplace.telas
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +14,6 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -43,10 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.pixelplace.entities.Usuario
-import com.example.pixelplace.network.ApiClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.pixelplace.entities.UsuarioRepository
 
 
 @Composable
@@ -56,7 +50,7 @@ fun TelaCadastro(navController: NavController) {
     var senha1 by remember { mutableStateOf("") }
     var senhaVisivel by remember { mutableStateOf(false) }
     val contexto = LocalContext.current
-    val apiService = ApiClient.apiService
+    val usuarioRepository = UsuarioRepository()
 
 
     Surface(
@@ -170,27 +164,9 @@ fun TelaCadastro(navController: NavController) {
                 modifier = Modifier
                     .size(width = 240.dp, height = ButtonDefaults.MinHeight),
                 onClick = {
-                    val usuario = Usuario(null, nomeUsuario, email, senha1, null, null)
-                    apiService.inserirUsuario(usuario).enqueue(object : Callback<Void> {
-                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                            if (response.isSuccessful) {
-                                navController.navigate("login")
-                            } else {
-                                Toast.makeText(
-                                    contexto,
-                                    "Não foi possivel cadastrar",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
+                    val usuario = Usuario(null, nomeUsuario, email, senha1, null, "")
+                    usuarioRepository.cadastrarUsuario(contexto,usuario,navController)
 
-                        override fun onFailure(call: Call<Void>, t: Throwable) {
-                            Toast.makeText(contexto, "Erro na conexão", Toast.LENGTH_SHORT)
-                                .show()
-                            Log.d("Conexao", t.toString())
-
-                        }
-                    })
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2596BE)),
                 shape = RoundedCornerShape(4.dp)
