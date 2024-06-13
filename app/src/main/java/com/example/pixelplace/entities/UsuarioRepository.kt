@@ -25,6 +25,10 @@ class UsuarioRepository {
                         Toast.makeText(contexto, "Entrando...", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(contexto, "Email ou senha estão errados", Toast.LENGTH_SHORT).show()
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
                     }
                 } else {
                     Toast.makeText(contexto, response.message(), Toast.LENGTH_SHORT).show()
@@ -37,7 +41,10 @@ class UsuarioRepository {
             }
         })
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
     fun cadastrarUsuario(context: Context, usuario: Usuario, navController: NavController) {
         val apiService = ApiClient.apiService
         val call = apiService.inserirUsuario(usuario)
@@ -57,6 +64,9 @@ class UsuarioRepository {
             }
         })
     }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/main
 }
