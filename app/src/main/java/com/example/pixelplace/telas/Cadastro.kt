@@ -1,5 +1,6 @@
 package com.example.pixelplace.telas
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,13 +42,14 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.pixelplace.entities.Usuario
 import com.example.pixelplace.entities.UsuarioRepository
+import com.example.pixelplace.ui.theme.poppinsFontFamily
 
 
 @Composable
 fun TelaCadastro(navController: NavController) {
     var nomeUsuario by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-    var senha1 by remember { mutableStateOf("") }
+    var senha by remember { mutableStateOf("") }
     var senhaVisivel by remember { mutableStateOf(false) }
     val contexto = LocalContext.current
     val usuarioRepository = UsuarioRepository()
@@ -84,6 +86,7 @@ fun TelaCadastro(navController: NavController) {
                     .align(Alignment.Start)
                     .padding(start = 60.dp, bottom = 10.dp),
                 text = "Nome de Usuário",
+                fontFamily = poppinsFontFamily,
                 color = Color.White
             )
 
@@ -91,7 +94,6 @@ fun TelaCadastro(navController: NavController) {
                 value = nomeUsuario,
                 onValueChange = { nomeUsuario = it },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
                     focusedContainerColor = Color(0XFF6E6F74),
                     unfocusedContainerColor = Color(0XFF6E6F74),
                     focusedBorderColor = Color(0XFF6E6F74)
@@ -107,6 +109,7 @@ fun TelaCadastro(navController: NavController) {
                     .align(Alignment.Start)
                     .padding(start = 55.dp, bottom = 10.dp),
                 text = "Endereço de e-mail",
+                fontFamily = poppinsFontFamily,
                 color = Color.White
             )
             OutlinedTextField(
@@ -128,18 +131,19 @@ fun TelaCadastro(navController: NavController) {
                     .align(Alignment.Start)
                     .padding(start = 55.dp, bottom = 10.dp),
                 text = "Digite sua Senha",
+                fontFamily = poppinsFontFamily,
                 color = Color.White
             )
             OutlinedTextField(
-                value = senha1,
-                onValueChange = { senha1 = it },
+                value = senha,
+                onValueChange = { senha = it },
                 visualTransformation = if (senhaVisivel) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     IconButton(onClick = { senhaVisivel = !senhaVisivel }) {
                         Icon(
                             imageVector = if (senhaVisivel) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                             tint = Color.White,
-                            contentDescription = if (senhaVisivel) "Esconder senha" else "Mostrar senha"
+                            contentDescription = null
                         )
                     }
                 },
@@ -164,8 +168,13 @@ fun TelaCadastro(navController: NavController) {
                 modifier = Modifier
                     .size(width = 240.dp, height = ButtonDefaults.MinHeight),
                 onClick = {
-                    val usuario = Usuario(null, nomeUsuario, email, senha1, null, "")
-                    usuarioRepository.cadastrarUsuario(contexto,usuario,navController)
+                    if (nomeUsuario.isNotBlank() && email.isNotBlank() && senha.isNotBlank()) {
+                        val usuario = Usuario(null, nomeUsuario, email, senha, null, "")
+                        usuarioRepository.cadastrarUsuario(contexto, usuario, navController)
+                    } else {
+                        Toast.makeText(contexto, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
+
+                    }
 
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2596BE)),
@@ -175,6 +184,7 @@ fun TelaCadastro(navController: NavController) {
                     text = "Cadastrar",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
+                    fontFamily = poppinsFontFamily,
                     textAlign = TextAlign.Center
                 )
             }
@@ -185,13 +195,16 @@ fun TelaCadastro(navController: NavController) {
             )
             Text(
                 text = "Já tem uma conta?",
-                color = Color.White,
-                fontSize = 22.sp
+                color = Color.Gray,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Medium,
+                fontSize = 18.sp
             )
             Text(modifier = Modifier
                 .clickable { navController.navigate(AppDestinos.Login.rota) }
                 .padding(top = 5.dp),
                 text = "iniciar sessão",
+                fontFamily = poppinsFontFamily,
                 color = Color(0xFF1992FE),
                 textDecoration = TextDecoration.Underline
             )

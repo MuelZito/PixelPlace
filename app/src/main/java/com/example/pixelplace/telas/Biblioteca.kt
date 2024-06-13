@@ -1,32 +1,43 @@
 package com.example.pixelplace.telas
 
-import android.annotation.SuppressLint
+import JogoViewModel
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.navigation.NavHostController
-import com.example.pixelplace.ui.theme.poppinsFontFamily
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pixelplace.components.CardBiblioteca
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+
 @Composable
-fun TelaBiblioteca(navController: NavHostController) {
+fun TelaBiblioteca(viewModel: JogoViewModel = viewModel()) {
+    val libraryState = viewModel.jogos.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color(0XFF3E3E3E)
     ) {
-        Text(
-            text = "TELA BIBLIOTECA DO APP",
-            fontFamily = poppinsFontFamily,
-            fontWeight = FontWeight.Bold
-        )
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(libraryState.value) { jogo ->
+                Log.d("TelaBiblioteca", "Exibindo jogo na biblioteca: ${jogo.nome}")
+                CardBiblioteca(
+                    jogo = jogo
+                )
+            }
+        }
     }
 }
 

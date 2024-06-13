@@ -1,9 +1,9 @@
 package com.example.pixelplace.telas
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,8 +15,6 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -41,15 +39,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pixelplace.entities.UsuarioRepository
+import com.example.pixelplace.ui.theme.poppinsFontFamily
 
 @Composable
 fun TelaLogin(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
-    var isChecked by remember { mutableStateOf(false) }
     var senhaVisivel by remember { mutableStateOf(false) }
     val contexto = LocalContext.current
     val usuarioRepository = UsuarioRepository()
+
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -70,8 +69,9 @@ fun TelaLogin(navController: NavController) {
             Text(
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(start = 55.dp, bottom = 10.dp),
+                    .padding(start = 57.dp, bottom = 10.dp),
                 text = "INICIAR SESSÃO COM O EMAIL",
+                fontFamily = poppinsFontFamily,
                 color = Color(0XFF1992FE),
                 textDecoration = TextDecoration.Underline
             )
@@ -94,8 +94,9 @@ fun TelaLogin(navController: NavController) {
             Text(
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(start = 55.dp, bottom = 10.dp),
+                    .padding(start = 57.dp, bottom = 10.dp),
                 text = "SENHA",
+                fontFamily = poppinsFontFamily,
                 color = Color.White
             )
 
@@ -118,40 +119,31 @@ fun TelaLogin(navController: NavController) {
                     focusedBorderColor = Color(0XFF6E6F74)
                 )
             )
-            Row(
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 43.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Checkbox(
-                    checked = isChecked,
-                    onCheckedChange = { isChecked = it },
-                    colors = CheckboxDefaults.colors(
-                        checkmarkColor = Color.White,
-                        checkedColor = Color(0XFF6E6F74),
-                        uncheckedColor = Color(0XFF6E6F74)
-                    )
-                )
-                Text(text = "Lembre-me", color = Color.LightGray)
-            }
+
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(26.dp)
             )
             Button(
                 modifier = Modifier
                     .size(width = 240.dp, height = ButtonDefaults.MinHeight),
                 onClick = {
-                    usuarioRepository.realizarLogin(contexto,email, senha, navController)
+                    if (email.isNotBlank() && senha.isNotBlank()) {
+                        usuarioRepository.realizarLogin(contexto, email, senha, navController)
+                    } else {
+                        Toast.makeText(contexto, "Preencha todos os campos", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2596BE)),
                 shape = RoundedCornerShape(4.dp)
             ) {
+
                 Text(
                     text = "Iniciar Sessão",
                     fontSize = 18.sp,
+                    fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
@@ -179,8 +171,9 @@ fun TelaLogin(navController: NavController) {
 
             Text(
                 text = "Não tem uma conta?",
-                color = Color.White,
-                fontSize = 22.sp
+                color = Color.Gray,
+                fontFamily = poppinsFontFamily,
+                fontSize = 18.sp
             )
             Text(
                 modifier = Modifier
@@ -190,6 +183,8 @@ fun TelaLogin(navController: NavController) {
                     .padding(top = 5.dp),
                 text = "Cadastrar-se",
                 color = Color(0xFF1992FE),
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Medium,
                 textDecoration = TextDecoration.Underline
             )
 

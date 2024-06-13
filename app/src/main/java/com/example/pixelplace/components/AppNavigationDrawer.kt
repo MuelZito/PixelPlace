@@ -1,9 +1,10 @@
 package com.example.pixelplace.components
 
-import android.annotation.SuppressLint
+import JogoViewModel
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,6 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,6 +33,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -37,9 +41,9 @@ import com.example.pixelplace.R
 import com.example.pixelplace.telas.AppDestinos
 import com.example.pixelplace.telas.TelaBiblioteca
 import com.example.pixelplace.telas.TelaCadastro
+import com.example.pixelplace.telas.TelaCarrinho
 import com.example.pixelplace.telas.TelaInicial
 import com.example.pixelplace.telas.TelaLogin
-import com.example.pixelplace.ui.theme.TopBarColor
 import com.example.pixelplace.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.launch
 
@@ -49,6 +53,10 @@ fun AppNavigationDrawer() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
+    val jogoViewModel: JogoViewModel = viewModel()
+    val titulo = remember { mutableStateOf(AppDestinos.Inicial.titulo) }
+
+
     val pixelplace = buildAnnotatedString {
         withStyle(style = SpanStyle(color = Color.White)) {
             append("Pixel")
@@ -57,7 +65,6 @@ fun AppNavigationDrawer() {
             append("Place")
         }
     }
-
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -135,36 +142,6 @@ fun AppNavigationDrawer() {
                     icon = {
                         Icon(
                             painter = painterResource(id = R.drawable.biblioteca),
-                            contentDescription = null,
-                            tint = Color.White
-                        )
-                    }
-                )
-                NavigationDrawerItem(modifier = Modifier.padding(start = 10.dp),
-                    colors = NavigationDrawerItemDefaults.colors(
-                        selectedContainerColor = Color.Transparent,
-                        unselectedContainerColor = Color.Transparent
-                    ),
-                    label = {
-                        Text(
-                            text = "Loja",
-                            fontFamily = poppinsFontFamily,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp,
-                            color = Color.White
-                        )
-                    },
-                    selected = false,
-                    onClick = {
-                        scope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
-                            }
-                        }
-                    },
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.loja),
                             contentDescription = null,
                             tint = Color.White
                         )
@@ -271,16 +248,17 @@ fun AppNavigationDrawer() {
         Scaffold(
             topBar = {
                 val coroutineScope = rememberCoroutineScope()
-                
+
                 CenterAlignedTopAppBar(
                     title = {
                         Text(
-                            text = pixelplace,
+                            text = titulo.value,
                             fontFamily = poppinsFontFamily, fontWeight = FontWeight.Bold
                         )
                     },
+
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = TopBarColor,
+                        containerColor = Color.DarkGray,
                         titleContentColor = Color.White,
 
                         ),
@@ -296,18 +274,46 @@ fun AppNavigationDrawer() {
                                 contentDescription = null
                             )
                         }
-                    })
+                    },
+                    actions = { IconButton(onClick = {navController.navigate(AppDestinos.Carrinho.rota)}) {
+                        Icon(imageVector = Icons.Filled.ShoppingCart, contentDescription = null, tint = Color.White)
+                    }}
+                    )
+                //Divider(Modifier.shadow(elevation = 10.dp))
             }
-        ) {paddingValues ->
-            NavHost(navController = navController, startDestination = AppDestinos.Login.rota, modifier = Modifier.padding(paddingValues)) {
-                composable(AppDestinos.Login.rota) { TelaLogin(navController) }
-                composable(AppDestinos.Inicial.rota) { TelaInicial() }
-                composable(AppDestinos.Biblioteca.rota) { TelaBiblioteca(navController) }
-                composable(AppDestinos.Cadastro.rota) { TelaCadastro(navController) }
+        ) { paddingValues ->
+            NavHost(
+                navController = navController,
+                startDestination = AppDestinos.Cadastro.rota,
+                modifier = Modifier.padding(paddingValues)
+            ) {
+                composable(AppDestinos.Login.rota) {
+                    titulo.value = AppDestinos.Login.titulo
+                    TelaLogin(navController)
+                }
+                composable(AppDestinos.Inicial.rota) {
+                    titulo.value = AppDestinos.Inicial.titulo
+                    TelaInicial(viewModel = jogoViewModel)
+                }
+                composable(AppDestinos.Biblioteca.rota) {
+                    titulo.value = AppDestinos.Biblioteca.titulo
+                    TelaBiblioteca()
+                }
+                composable(AppDestinos.Cadastro.rota) {
+                    titulo.value = AppDestinos.Cadastro.titulo
+                    TelaCadastro(navController)
+                }
+                composable(AppDestinos.Carrinho.rota) {
+                    titulo.value = AppDestinos.Carrinho.titulo
+
+                    TelaCarrinho(viewModel = jogoViewModel)
+                }
             }
+
         }
     }
 }
+
 @Preview
 @Composable
 fun DefaultPreview() {
